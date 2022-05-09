@@ -1,0 +1,94 @@
+name: Node.js Package
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Let Slack Know 1
+        id: hey-slack-1
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+        with:
+          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+          method: post
+          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": [Offer Component Release Action] \n "Starting Offer Component build. :matrix:" }'
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Node
+        uses: actions/setup-node@v1
+        with:
+          always-auth: true
+          node-version: '14.x'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@buddy-technology'
+
+      - name: Install Dependencies
+        run: yarn
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BUDDY_HELPERS_NPM_TOKEN}}
+
+      - name: build
+        run: yarn build
+
+      - name: Let Slack Know We Failed Build
+        if: ${{ failure() }}
+        id: hey-slack-fail-build
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+        with:
+          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+          method: post
+          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n We failed build :face_with_head_bandage:." }'
+
+      - name: test
+        run: yarn test
+
+      - name: Let Slack Know We Failed Tests
+        if: ${{ failure() }}
+        id: hey-slack-fail-tests
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+        with:
+          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+          method: post
+          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n We failed tests :sob:." }'
+
+      - name: Let Slack Know Tests Passed
+        if: ${{ success() }}
+        id: hey-slack-tests-passed
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+        with:
+          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+          method: post
+          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] \n tests passed! :white_check_mark:." }'
+
+      - name: publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Let Slack Know We Failed
+        if: ${{ failure() }}
+        id: hey-slack-fail-publish
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+        with:
+          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+          method: post
+          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n Our :package: failed publish :x:." }'
+
+      - name: Let Slack Know We Succeeded
+        if: ${{ success() }}
+        id: hey-slack-success
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+        with:
+          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+          method: post
+          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] \n Published! :party-wizard:." }'
