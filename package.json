@@ -2,6 +2,10 @@
   "name": "offer-component",
   "version": "0.1.0",
   "private": true,
+  "author": "Buddy Technology",
+  "main": "dist/index.js",
+  "types": "./lib/types.d.ts",
+  "license": "none",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
@@ -18,9 +22,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "yarn start",
-    "start": "react-scripts start",
     "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files",
+    "dev": "yarn start",
+    "document": "jsdoc2md -c jsdoc.config.json src/*.js src/**/*.js > README.md && node createTypesFile",
+    "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -45,6 +50,10 @@
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.17.10"
+    "@babel/preset-env": "^7.17.10",
+    "jsdoc": "^3.6.10",
+    "jsdoc-to-markdown": "^7.1.1",
+    "jsdoc-tsimport-plugin": "^1.0.5",
+    "tsd-jsdoc": "^2.5.0"
   }
 }

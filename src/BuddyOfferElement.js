@@ -1,7 +1,10 @@
 import React from 'react';
-
+/**
+ * BuddyOfferElement
+ * @param  {} options
+ */
 function BuddyOfferElement(options) {
-	const onBuddyScriptLoad = (e) => {
+	const onBuddyScriptLoad = () => {
 		window.buddy_setup(options);
 	};
 

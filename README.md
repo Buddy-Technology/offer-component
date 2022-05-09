@@ -1,2 +1,11 @@
-# offer-component
-A React Wrapper around our offer load script
+<a name="BuddyOfferElement"></a>
+
+## BuddyOfferElement(options)
+BuddyOfferElement
+
+**Kind**: global function  
+
+| Param |
+| --- |
+| options | 
+
