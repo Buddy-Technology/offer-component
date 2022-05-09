@@ -4,12 +4,11 @@ Red=$'\e[0;31m'
 Green=$'\e[0;32m'
 Blue=$'\e[0;34m'
 Yellow=$'\e[0;33m'
-
-yarn version
+Remove=$'\e[0m'
 
 echo "$Green Version $npm_package_version created."
 
-echo "$Yellow What's new in this release? (Enter multiple lines. Type CTRL + D when done.)"
+echo "$Yellow What's new in this release? (Enter multiple lines. Type CTRL + D when done.)$Remove"
 release_notes=()
 while read release_notes
 do
@@ -28,4 +27,4 @@ git push origin main
 gh_release_notes=$(sed -n "/### v${npm_package_version}-BETA/,/---/p" CHANGELOG.md)
 gh release create "release-v${npm_package_version}-BETA" -n "${gh_release_notes}" -t "v${npm_package_version}-BETA" -p # remove -p once this is out of BETA.
 
-echo "$Blue Thanks cool breeeeeze 🌬💨"
+echo "$Blue Thanks cool breeeeeze 🌬💨$Remove"

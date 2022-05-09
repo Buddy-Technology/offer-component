@@ -24,8 +24,9 @@
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files",
     "dev": "yarn start",
-    "deploy": "./deploy.sh",
+    "deploy": "yarn version",
     "document": "jsdoc2md -c jsdoc.config.json src/*.js src/**/*.js > README.md && node createTypesFile",
+    "postversion": "./deploy.sh",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

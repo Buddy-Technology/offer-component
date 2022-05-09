@@ -15,7 +15,7 @@ jobs:
           url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
           method: post
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] \n "Starting Offer Component build. :matrix:" }'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] \n Starting Offer Component build. :matrix:" }'
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -44,7 +44,7 @@ jobs:
           url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
           method: post
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n We failed build :face_with_head_bandage:." }'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] /\n We failed build :face_with_head_bandage:." }'
 
       # - name: test
       #   id: test
@@ -58,7 +58,7 @@ jobs:
           url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
           method: post
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n We failed tests :sob:." }'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] /\n We failed tests :sob:." }'
 
       - name: publish
         run: npm publish
@@ -74,7 +74,7 @@ jobs:
           url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
           method: post
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n Our :package: failed publish :x:." }'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] /\n Our :package: failed publish :x:." }'
 
       - name: Let Slack Know We Succeeded
         if: ${{ success() }}
@@ -84,4 +84,4 @@ jobs:
           url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
           method: post
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] \n Published! :party-wizard:." }'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] /\n Published! :party-wizard:." }'
