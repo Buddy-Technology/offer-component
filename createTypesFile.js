@@ -10,7 +10,7 @@ const writeTypesFile = async () => {
 
 		// now we amend it real quick. It's annoying we have to do this, but I haven't found a better solution.
 		const raw = fs.readFileSync('./lib/types.d.ts', 'utf8');
-		const str = 'export = ionHelpers';
+		const str = 'export = BuddyOfferElement';
 		const fixed = `${str}\n\n${raw.replace(/"/g, '')}`;
 		fs.writeFileSync('./lib/types.d.ts', fixed, 'utf8');
 	} catch (error) {
