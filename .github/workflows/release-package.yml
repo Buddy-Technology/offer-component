@@ -15,7 +15,7 @@ jobs:
           url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
           method: post
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": [Offer Component Release Action] \n "Starting Offer Component build. :matrix:" }'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] \n "Starting Offer Component build. :matrix:" }'
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -33,10 +33,11 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.BUDDY_HELPERS_NPM_TOKEN}}
 
       - name: build
+        id: build
         run: yarn build
 
       - name: Let Slack Know We Failed Build
-        if: ${{ failure() }}
+        if: steps.build.outputs.failure
         id: hey-slack-fail-build
         uses: CamiloGarciaLaRotta/watermelon-http-client@v1
         with:
@@ -45,11 +46,12 @@ jobs:
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
           data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n We failed build :face_with_head_bandage:." }'
 
-      - name: test
-        run: yarn test
+      # - name: test
+      #   id: test
+      #   run: yarn test
 
       - name: Let Slack Know We Failed Tests
-        if: ${{ failure() }}
+        if: steps.deploy.test.failure
         id: hey-slack-fail-tests
         uses: CamiloGarciaLaRotta/watermelon-http-client@v1
         with:
@@ -58,23 +60,14 @@ jobs:
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
           data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] \n We failed tests :sob:." }'
 
-      - name: Let Slack Know Tests Passed
-        if: ${{ success() }}
-        id: hey-slack-tests-passed
-        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
-        with:
-          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
-          method: post
-          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] \n tests passed! :white_check_mark:." }'
-
       - name: publish
         run: npm publish
+        id: publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Let Slack Know We Failed
-        if: ${{ failure() }}
+        if: steps.publish.outputs.failure
         id: hey-slack-fail-publish
         uses: CamiloGarciaLaRotta/watermelon-http-client@v1
         with:
