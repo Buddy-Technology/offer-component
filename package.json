@@ -34,7 +34,6 @@
     "postversion": "./deploy.sh",
     "start": "ESLINT_NO_DEV_ERRORS=true react-scripts start",
     "test": "react-scripts test",
-    "jsdoc-help": "jsdoc --help",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
