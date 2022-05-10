@@ -7208,6 +7208,10 @@ react@^18.1.0:
   dependencies:
     loose-envify "^1.1.0"
 
+"react@link:../node_modules/react":
+  version "0.0.0"
+  uid ""
+
 readable-stream@^2.0.1:
   version "2.3.7"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.7.tgz#1eca1cf711aef814c04f62252a36a62f6cb23b57"

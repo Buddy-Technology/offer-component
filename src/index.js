@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import React, { FunctionComponent } from 'react';
-import { loadScript } from './util';
+import React, { FunctionComponent, useEffect } from 'react';
+import { loadScript, updateOffer } from './util';
 /**
  * @typedef {Object} DataObject
  * @property {Object} [customer] - customer data
@@ -82,8 +82,13 @@ import { loadScript } from './util';
 
 function BuddyOfferElement(options) {
 	loadScript(options);
+
+	useEffect(() => {
+		updateOffer(options);
+	}, [options]);
+
 	return (
-		<div id="buddy_widget" />
+		<div id="buddy_offer" />
 	);
 }
 

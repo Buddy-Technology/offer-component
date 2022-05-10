@@ -1,5 +1,7 @@
-const V3_URL = 'https://staging.embed.buddyinsurance.com/scripts/v2/index.js';
-const V3_URL_REGEX = /^https:\/\/staging\.embed\.buddyinsurance\.com\/scripts\/index\.js\/?(\?.*)?$/;
+// const V3_URL = 'https://staging.embed.buddyinsurance.com/scripts/v2/index.js';
+// const V3_URL_REGEX = /^https:\/\/staging\.embed\.buddyinsurance\.com\/scripts\/index\.js\/?(\?.*)?$/;
+const V3_URL = 'http://localhost:3012/index.js';
+const V3_URL_REGEX = /^http:\/\/localhost:3012\/index\.js\/?(\?.*)?$/;
 const EXISTING_SCRIPT_MESSAGE = 'Buddy Script is already present';
 
 const defaultOptions = {
@@ -12,12 +14,24 @@ export const findScript = () => {
 	return matchedScript;
 };
 
+export const updateOffer = (options) => {
+	if (window.Buddy) {
+		window.Buddy.updateOffer(options);
+	}
+};
+
+const createOffer = (options) => {
+	if (window.Buddy) {
+		window.Buddy.createOffer(options);
+	}
+};
+
 const injectScript = (options) => {
 	const finalOptions = { defaultOptions, ...options };
 	const script = document.createElement('script');
 	script.src = `${V3_URL}`;
 	document.body.appendChild(script);
-	script.onload = () => window.buddy_setup(finalOptions);
+	script.onload = () => createOffer(finalOptions);
 	return script;
 };
 
@@ -37,13 +51,13 @@ export const loadScript = (options) => {
 			return;
 		}
 
-		if (window.buddy_setup) {
+		if (window.Buddy) {
 			// eslint-disable-next-line no-console
 			console.warn(EXISTING_SCRIPT_MESSAGE);
 		}
 
-		if (window.buddy_setup) {
-			resolve(window.buddy_setup);
+		if (window.Buddy) {
+			resolve(window.Buddy);
 			return;
 		}
 
@@ -58,8 +72,8 @@ export const loadScript = (options) => {
 			}
 
 			script.addEventListener('load', () => {
-				if (window.buddy_setup) {
-					resolve(window.buddy_setup);
+				if (window.Buddy) {
+					resolve(window.Buddy);
 				} else {
 					reject(new Error('Buddy Offer Element not available'));
 				}
