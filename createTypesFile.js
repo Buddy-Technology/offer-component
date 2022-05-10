@@ -6,7 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 const writeTypesFile = async () => {
 	try {
 		// this runs jsdoc to create types file.
-		await exec('jsdoc -r src -t node_modules/tsd-jsdoc/dist -d lib -c jsdoc.config.json');
+		await exec('jsdoc src -t node_modules/tsd-jsdoc/dist --private -d lib -c jsdoc.config.json');
 
 		// now we amend it real quick. It's annoying we have to do this, but I haven't found a better solution.
 		const raw = fs.readFileSync('./lib/types.d.ts', 'utf8');

@@ -6,7 +6,6 @@ const EXISTING_SCRIPT_MESSAGE = 'Buddy Script is already present';
 
 /**
  * @type {Object}
- * @private
  * @property {string} stage
  */
 const defaultOptions = {
@@ -15,7 +14,6 @@ const defaultOptions = {
 
 /**
  * @function findScript
- * @private
  * @returns {(HTMLElement | undefined)}
  */
 export const findScript = () => {
@@ -26,7 +24,6 @@ export const findScript = () => {
 
 /**
  * @function updateOffer
- * @private
  * @param  {Object} options
  */
 export const updateOffer = (options) => {
@@ -37,7 +34,6 @@ export const updateOffer = (options) => {
 
 /**
  * @function createOffer
- * @private
  * @param  {Object} options
  */
 const createOffer = (options) => {
@@ -48,7 +44,6 @@ const createOffer = (options) => {
 
 /**
  * @function injectScript
- * @private
  * @param  {Object} options
  * @returns {HTMLElement}
  */
@@ -63,13 +58,11 @@ const injectScript = (options) => {
 
 /**
  * @type {(Promise | null)}
- * @private
  */
 let scriptPromise = null;
 
 /**
  * @function loadScript
- * @private
  * @param  {Object} options
  * @returns {Promise}
  */

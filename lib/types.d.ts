@@ -89,3 +89,19 @@ declare type BuddyOfferElementProps = {
 
 declare function BuddyOfferElement(options: BuddyOfferElementProps): FunctionComponent<BuddyOfferElementProps>;
 
+declare const defaultOptions: {
+    stage: string;
+};
+
+declare function findScript(): HTMLElement | undefined;
+
+declare function updateOffer(options: any): void;
+
+declare function createOffer(options: any): void;
+
+declare function injectScript(options: any): HTMLElement;
+
+declare var scriptPromise: Promise | null;
+
+declare function loadScript(options: any): Promise;
+
