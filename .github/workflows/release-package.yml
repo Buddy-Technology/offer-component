@@ -85,3 +85,21 @@ jobs:
           method: post
           headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
           data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[Offer Component Release Action] /\n Published! :party-wizard:." }'
+  
+  fail:
+    name: Publish Failed
+    runs-on: ubuntu-latest
+    needs: checks
+    if: ${{ failure() }}
+    steps:
+      # Notify Slack
+      - name: Let Slack Know action Failed
+        id: hey-slack-action-failed
+        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+        with:
+          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+          method: post
+          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": "[offer-component: release-package action]: \n Publish failed. :sob:" }'
+      - name: Echo
+        run: echo ${{ matrix }}
