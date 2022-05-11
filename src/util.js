@@ -1,8 +1,19 @@
-// const V3_URL = 'https://staging.embed.buddyinsurance.com/scripts/v2/index.js';
-// const V3_URL_REGEX = /^https:\/\/staging\.embed\.buddyinsurance\.com\/scripts\/index\.js\/?(\?.*)?$/;
-const V3_URL = 'http://localhost:3012/index.js';
-const V3_URL_REGEX = /^http:\/\/localhost:3012\/index\.js\/?(\?.*)?$/;
-const EXISTING_SCRIPT_MESSAGE = 'Buddy Script is already present';
+const EXISTING_SCRIPT_MESSAGE = 'Buddy Offer Script is already loaded.';
+
+const SCRIPTS = {
+	DEVELOPMENT: {
+		URL: 'http://localhost:3012/index.js',
+		REGEX: /^http:\/\/localhost:3012\/index\.js\/?(\?.*)?$/,
+	},
+	STAGING: {
+		URL: 'https://js.buddy.insure/v2/staging/index.js',
+		REGEX: /^https:\/\/js\.buddy\.insure\/v2\/staging\/index\.js\/?(\?.*)?$/,
+	},
+	PRODUCTION: {
+		URL: 'https://js.buddy.insure/v2/index.js',
+		REGEX: /^https:\/\/js\.buddy\.insure\/v2\/index\.js\/?(\?.*)?$/,
+	},
+};
 
 /**
  * @type {Object}
@@ -13,12 +24,43 @@ const defaultOptions = {
 };
 
 /**
+ * @function isEmptyOrNil
+ * @param  {*} value
+ * @returns {Boolean}
+ */
+const isEmptyOrNil = (value) => {
+	const isNil = (val) => [undefined, null].includes(val);
+	const isEmptyStr = (str) => typeof str === 'string' && str.trim().length === 0;
+	const isEmptyObjOrArr = (obj) => (typeof obj === 'object' && obj.length === undefined &&
+		Object.keys(obj).length === 0) || (Array.isArray(obj) && obj.length === 0);
+	return (isNil(value) || isEmptyStr(value) || isEmptyObjOrArr(value));
+};
+/**
+ * @param  {Array<String>} propsToCheck
+ * @param  {Object} obj
+ * @returns {(null | String)}
+ */
+const validatePropertiesOfObject = (propsToCheck, obj) => {
+	const emptyProps = propsToCheck.filter((prop) => isEmptyOrNil(obj[prop]));
+	if (emptyProps.length) {
+		const displayMissingProps = emptyProps.reduce((prev, current, i) => {
+			const isLastEl = i === emptyProps.length - 1;
+			return isLastEl ? `${prev}${current}.` : `${prev}${current}, `;
+		}, '');
+		return `The following props are required: ${displayMissingProps}`;
+	}
+	return null;
+};
+
+/**
  * @function findScript
+ * @param {String} stage
  * @returns {(HTMLElement | undefined)}
  */
-export const findScript = () => {
-	const scripts = Array.from(document.querySelectorAll(`script[src^="${V3_URL}"]`));
-	const matchedScript = scripts.find(({ src }) => V3_URL_REGEX.test(src));
+export const findScript = (stage = defaultOptions.stage) => {
+	const { URL, REGEX } = SCRIPTS[stage];
+	const scripts = Array.from(document.querySelectorAll(`script[src^="${URL}"]`));
+	const matchedScript = scripts.find(({ src }) => REGEX.test(src));
 	return matchedScript;
 };
 
@@ -48,9 +90,9 @@ const createOffer = (options) => {
  * @returns {HTMLElement}
  */
 const injectScript = (options) => {
-	const finalOptions = { defaultOptions, ...options };
+	const finalOptions = { ...defaultOptions, ...options };
 	const script = document.createElement('script');
-	script.src = `${V3_URL}`;
+	script.src = `${SCRIPTS[finalOptions.stage].URL}`;
 	document.body.appendChild(script);
 	script.onload = () => createOffer(finalOptions);
 	return script;
@@ -91,7 +133,15 @@ export const loadScript = (options) => {
 		}
 
 		try {
-			let script = findScript();
+			const requiredProps = ['ion', 'partnerID'];
+			const missingRequiredProps = validatePropertiesOfObject(requiredProps, options);
+
+			if (missingRequiredProps) {
+				reject(new Error(missingRequiredProps));
+				return;
+			}
+
+			let script = findScript(options?.stage);
 
 			if (script) {
 				// eslint-disable-next-line no-console
