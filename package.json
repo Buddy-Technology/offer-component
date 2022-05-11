@@ -31,7 +31,7 @@
     "dev": "rm -rf dist && NODE_ENV=development babel src --out-dir dist --watch",
     "deploy": "yarn version",
     "document": "jsdoc2md -c jsdoc.config.json src/index.js > README.md && node createTypesFile",
-    "postversion": "./deploy.sh",
+    "postversion": "yarn document && yarn build && ./deploy.sh",
     "start": "ESLINT_NO_DEV_ERRORS=true react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

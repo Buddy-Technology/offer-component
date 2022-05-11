@@ -93,7 +93,11 @@ declare const defaultOptions: {
     stage: string;
 };
 
-declare function findScript(): HTMLElement | undefined;
+declare function isEmptyOrNil(value: any): boolean;
+
+declare function validatePropertiesOfObject(propsToCheck: String[], obj: any): null | string;
+
+declare function findScript(stage: string): HTMLElement | undefined;
 
 declare function updateOffer(options: any): void;
 
