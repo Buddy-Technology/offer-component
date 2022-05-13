@@ -92,7 +92,6 @@ const createOffer = (options) => {
 const injectScript = (options) => {
 	const finalOptions = { ...defaultOptions, ...options };
 	const script = document.createElement('script');
-	script.crossOrigin = '';
 	script.src = `${SCRIPTS[finalOptions.stage].URL}`;
 	document.body.appendChild(script);
 	script.onload = () => createOffer(finalOptions);
