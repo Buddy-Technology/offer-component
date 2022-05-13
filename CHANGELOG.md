@@ -1,5 +1,12 @@
 # CHANGELOG 
 
+### v0.1.12  
+2022-05-13  
+ 
+- Removed crossOrigin    
+---  
+  
+
 ### v0.1.11  
 2022-05-13  
  
