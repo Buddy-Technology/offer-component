@@ -1,5 +1,12 @@
 # CHANGELOG 
 
+### v0.1.11  
+2022-05-13  
+ 
+- The crossOrigin thing    
+---  
+  
+
 ### v0.1.10  
 2022-05-13  
  
