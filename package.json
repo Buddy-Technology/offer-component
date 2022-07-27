@@ -1,6 +1,6 @@
 {
   "name": "@buddy-technology/offer-component",
-  "version": "0.1.12",
+  "version": "0.2.1",
   "author": "Buddy Technology",
   "main": "dist/index.js",
   "types": "./lib/types.d.ts",
