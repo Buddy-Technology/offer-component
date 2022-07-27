@@ -81,7 +81,15 @@ import { loadScript, updateOffer } from './util';
  */
 
 function BuddyOfferElement(options) {
-	loadScript(options);
+	const getScript = async () => {
+		try {
+			await loadScript(options);
+		} catch (error) {
+			// eslint-disable-next-line no-console
+			console.error(error);
+		}
+	};
+	getScript();
 
 	useEffect(() => {
 		updateOffer(options);
