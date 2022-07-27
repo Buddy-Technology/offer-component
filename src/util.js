@@ -1,9 +1,13 @@
 const EXISTING_SCRIPT_MESSAGE = 'Buddy Offer Script is already loaded.';
 
 const SCRIPTS = {
+	LOCAL: {
+		URL: 'http://localhost:8008/index.js',
+		REGEX: /^http:\/\/localhost:8008\/index\.js\/?(\?.*)?$/,
+	},
 	DEVELOPMENT: {
-		URL: 'http://localhost:3012/index.js',
-		REGEX: /^http:\/\/localhost:3012\/index\.js\/?(\?.*)?$/,
+		URL: 'https://js.buddy.insure/v2/dev/index.js',
+		REGEX: /^https:\/\/js\.buddy\.insure\/v2\/staging\/index\.js\/?(\?.*)?$/,
 	},
 	STAGING: {
 		URL: 'https://js.buddy.insure/v2/staging/index.js',
@@ -22,7 +26,7 @@ const STAGES = Object.keys(SCRIPTS);
  * @property {string} stage
  */
 const defaultOptions = {
-	stage: 'STAGING',
+	stage: 'PRODUCTION', // Since this will be consumed externally, the default stage should be production.
 };
 
 /**
@@ -127,9 +131,6 @@ export const loadScript = (options) => {
 		if (window.Buddy) {
 			// eslint-disable-next-line no-console
 			console.warn(EXISTING_SCRIPT_MESSAGE);
-		}
-
-		if (window.Buddy) {
 			resolve(window.Buddy);
 			return;
 		}
@@ -171,6 +172,7 @@ export const loadScript = (options) => {
 				reject(new Error('Failed to load Buddy Offer Element'));
 			});
 		} catch (error) {
+			console.log(error);
 			reject(error);
 		}
 	});
