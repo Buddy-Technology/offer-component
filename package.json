@@ -16,22 +16,13 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
-  "dependencies": {
-    "core-js": "^3.22.4",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.29.4",
-    "react": "^18.1.0",
-    "react-scripts": "5.0.1",
-    "regenerator-runtime": "^0.13.9"
-  },
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist",
-    "dev": "rm -rf dist && NODE_ENV=development babel src --out-dir dist --watch",
+    "dev": "concurrently \"yarn watch:src\" \"cd test-app && PORT=3006 yarn dev\"",
     "deploy": "yarn version",
     "document": "jsdoc2md -c jsdoc.config.json src/index.js > API.md && node createTypesFile",
     "postversion": "yarn document && yarn build && ./deploy.sh",
+    "watch:src": "rm -rf dist && NODE_ENV=development babel src --out-dir dist --watch",
     "start": "ESLINT_NO_DEV_ERRORS=true react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -58,9 +49,22 @@
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
+    "concurrently": "^7.3.0",
+    "core-js": "^3.22.4",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
     "jsdoc": "^3.6.10",
     "jsdoc-to-markdown": "^7.1.1",
     "jsdoc-tsimport-plugin": "^1.0.5",
+    "react": "^18.1.0",
+    "react-scripts": "5.0.1",
+    "regenerator-runtime": "^0.13.9",
     "tsd-jsdoc": "^2.5.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   }
 }
