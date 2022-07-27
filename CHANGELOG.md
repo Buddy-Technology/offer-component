@@ -1,5 +1,13 @@
 # CHANGELOG 
 
+### v0.2.1  
+2022-07-27  
+ 
+- moved unneeded deps into devDeps and peerDeps to not cause react conflicts   
+- added a catch for a non-enum stage being passed    
+---  
+  
+
 ### v0.1.12  
 2022-05-13  
  
