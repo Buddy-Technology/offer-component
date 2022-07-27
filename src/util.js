@@ -15,6 +15,8 @@ const SCRIPTS = {
 	},
 };
 
+const STAGES = Object.keys(SCRIPTS);
+
 /**
  * @type {Object}
  * @property {string} stage
@@ -138,6 +140,13 @@ export const loadScript = (options) => {
 
 			if (missingRequiredProps) {
 				reject(new Error(missingRequiredProps));
+				return;
+			}
+
+			// If stage is passed, ensure it is one of the prescribed options.
+			if (options?.stage && !STAGES.includes(options.stage)) {
+				const msg = `The stage prop must be one of: [${STAGES.join(' , ')}], but received "${options.stage}."`;
+				reject(new Error(msg));
 				return;
 			}
 
