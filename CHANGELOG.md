@@ -1,5 +1,14 @@
 # CHANGELOG 
 
+### v0.2.2  
+2022-07-28  
+ 
+- added error catch for stage enums   
+- few more console warnings for users   
+- test-app to use DEV stage and buddytest partner    
+---  
+  
+
 ### v0.2.1  
 2022-07-27  
  
