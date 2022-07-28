@@ -172,7 +172,6 @@ export const loadScript = (options) => {
 				reject(new Error('Failed to load Buddy Offer Element'));
 			});
 		} catch (error) {
-			console.log(error);
 			reject(error);
 		}
 	});
