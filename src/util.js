@@ -1,9 +1,13 @@
 const EXISTING_SCRIPT_MESSAGE = 'Buddy Offer Script is already loaded.';
 
 const SCRIPTS = {
+	LOCAL: {
+		URL: 'http://localhost:8008/index.js',
+		REGEX: /^http:\/\/localhost:8008\/index\.js\/?(\?.*)?$/,
+	},
 	DEVELOPMENT: {
-		URL: 'http://localhost:3012/index.js',
-		REGEX: /^http:\/\/localhost:3012\/index\.js\/?(\?.*)?$/,
+		URL: 'https://js.buddy.insure/v2/dev/index.js',
+		REGEX: /^https:\/\/js\.buddy\.insure\/v2\/staging\/index\.js\/?(\?.*)?$/,
 	},
 	STAGING: {
 		URL: 'https://js.buddy.insure/v2/staging/index.js',
@@ -127,9 +131,6 @@ export const loadScript = (options) => {
 		if (window.Buddy) {
 			// eslint-disable-next-line no-console
 			console.warn(EXISTING_SCRIPT_MESSAGE);
-		}
-
-		if (window.Buddy) {
 			resolve(window.Buddy);
 			return;
 		}
@@ -141,6 +142,11 @@ export const loadScript = (options) => {
 			if (missingRequiredProps) {
 				reject(new Error(missingRequiredProps));
 				return;
+			}
+
+			if (!options?.stage) {
+				// eslint-disable-next-line no-console
+				console.warn(`No stage passed to BuddyOfferElement. Using default stage: ${defaultOptions.stage}`);
 			}
 
 			// If stage is passed, ensure it is one of the prescribed options.
