@@ -23,7 +23,7 @@ function App() {
           Dev Mode for Buddy Offer Element. Edit <code>src</code> folder in parent and save to reload.
         </h2>
       </div>
-      <BuddyOfferElement ion="VIGILANCE_OCCUPATIONAL_ACCIDENT" partnerID='wrb' theme={theme} data={data} />
+      <BuddyOfferElement ion="VIGILANCE_OCCUPATIONAL_ACCIDENT" partnerID='p-buddytest' theme={theme} data={data} stage="DEVELOPMENT"/>
     </div>
   );
 }
