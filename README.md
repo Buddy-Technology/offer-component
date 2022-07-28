@@ -23,7 +23,7 @@ function App() {
   return (
     <div id="app">
       <h1>My App</h1>
-      <BuddyOfferElement ion="MY_ION" partnerID="my-partner-id" />
+      <BuddyOfferElement ion="MY_ION" partnerID="my-partner-id" stage="staging" />
     </div>
   );
 }
@@ -36,7 +36,7 @@ export default App;
 | --- | --- | --- | --- |
 | *partnerID | string | | The partnerID assigned to you from Buddy |
 | *ion | string | | The ion ID for the product to be presented |
-| stage | enum | "production" | One of: `"staging"`, `"production"`. Set to `"staging"` for testing and development. |
+| stage | enum | "STAGING" | One of: `"STAGING"`, `"PRODUCTION"`. Set to `"STAGING"` (default) for testing and development. |
 | viewType | enum | `"paginated"` | Sets how the offer element is displayed. One of: `"paginated"`, `"single-form"`, `"offer-only"`. _See [View types](#view-types) for details._|
 | includeCheckout | boolean | `true` | Toggles whether to render the secure checkout.  |
 | onAddToCart | function | | The callback fired when a user opts into an offer. See Buddy's Partner API docs for details on how to complete the transaction.|
@@ -91,6 +91,7 @@ function App() {
         viewType="offer-only"
         onAddToCart={handleAddToCart}
         onRemoveFromCart={handleRemoveFromCart}
+        stage="PRODUCTION"
       />
     </div>
   );
@@ -133,6 +134,7 @@ function App() {
         ion="MY_ION"
         partnerID="my-partner-id"
         data={data}
+        stage="PRODUCTION"
       />
     </div>
   );
@@ -192,6 +194,7 @@ function App() {
         ion="MY_ION"
         partnerID="my-partner-id"
         theme={customTheme}
+        stage="PRODUCTION"
       />
     </div>
   );
