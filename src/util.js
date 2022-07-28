@@ -144,6 +144,11 @@ export const loadScript = (options) => {
 				return;
 			}
 
+			if (!options?.stage) {
+				// eslint-disable-next-line no-console
+				console.warn(`No stage passed to BuddyOfferElement. Using default stage: ${defaultOptions.stage}`);
+			}
+
 			// If stage is passed, ensure it is one of the prescribed options.
 			if (options?.stage && !STAGES.includes(options.stage)) {
 				const msg = `The stage prop must be one of: [${STAGES.join(' , ')}], but received "${options.stage}."`;
