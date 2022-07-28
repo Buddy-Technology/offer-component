@@ -26,7 +26,7 @@ const STAGES = Object.keys(SCRIPTS);
  * @property {string} stage
  */
 const defaultOptions = {
-	stage: 'PRODUCTION', // Since this will be consumed externally, the default stage should be production.
+	stage: 'STAGING',
 };
 
 /**
