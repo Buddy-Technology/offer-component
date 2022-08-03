@@ -76,7 +76,12 @@ export const findScript = (stage = defaultOptions.stage) => {
  */
 export const updateOffer = (options) => {
 	if (window.Buddy) {
-		window.Buddy.updateOffer(options);
+		try {
+			window.Buddy.updateOffer(options);
+		} catch (error) {
+			// eslint-disable-next-line no-console
+			console.error(error);
+		}
 	}
 };
 
@@ -86,7 +91,12 @@ export const updateOffer = (options) => {
  */
 const createOffer = (options) => {
 	if (window.Buddy) {
-		window.Buddy.createOffer(options);
+		try {
+			window.Buddy.createOffer(options);
+		} catch (error) {
+			// eslint-disable-next-line no-console
+			console.error(error);
+		}
 	}
 };
 
