@@ -59,7 +59,7 @@ jobs:
           data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] /\n We failed tests :sob:." }'
 
       - name: publish
-        run: npm publish
+        run: npm publish --access-public
         id: publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
