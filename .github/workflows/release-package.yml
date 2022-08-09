@@ -29,8 +29,6 @@ jobs:
 
       - name: Install Dependencies
         run: yarn
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.BUDDY_HELPERS_NPM_TOKEN}}
 
       - name: build
         id: build
