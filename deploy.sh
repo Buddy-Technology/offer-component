@@ -24,7 +24,7 @@ git add CHANGELOG.md
 git commit -m "updated docs and changelog"
 git push origin main
 
-gh_release_notes=$(sed -n "/### v${npm_package_version}-BETA/,/---/p" CHANGELOG.md)
-gh release create "release-v${npm_package_version}-BETA" -n "${gh_release_notes}" -t "v${npm_package_version}-BETA" -p # remove -p once this is out of BETA.
+gh_release_notes=$(sed -n "/### v${npm_package_version}/,/---/p" CHANGELOG.md)
+gh release create "release-v${npm_package_version}" -n "${gh_release_notes}" -t "v${npm_package_version}"
 
 echo "$Blue Thanks cool breeeeeze 🌬💨$Remove"
