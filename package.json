@@ -1,11 +1,11 @@
 {
   "name": "@buddy-technology/offer-component",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "author": "Buddy Technology",
   "main": "dist/index.js",
   "types": "./lib/types.d.ts",
   "license": "none",
-  "private":false,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "git://github.com/Buddy-Technology/offer-component.git"
