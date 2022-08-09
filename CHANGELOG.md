@@ -1,5 +1,12 @@
 # CHANGELOG 
 
+### v0.2.5  
+2022-08-09  
+ 
+- remove pre-release tags    
+---  
+  
+
 ### v0.2.4  
 2022-08-09  
  
