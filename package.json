@@ -4,7 +4,7 @@
   "author": "Buddy Technology",
   "main": "dist/index.js",
   "types": "./lib/types.d.ts",
-  "license": "none",
+  "license": "UNLICENSED",
   "private": false,
   "repository": {
     "type": "git",
@@ -14,9 +14,6 @@
     "url": "https://github.com/Buddy-Technology/offer-component/issues"
   },
   "homepage": "https://github.com/Buddy-Technology/offer-component#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist",
     "dev": "concurrently \"yarn watch:src\" \"cd test-app && PORT=3006 yarn dev\"",
