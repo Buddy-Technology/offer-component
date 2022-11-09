@@ -1,5 +1,12 @@
 # CHANGELOG 
 
+### v0.2.6  
+2022-11-09  
+ 
+- Added testing as an environment    
+---  
+  
+
 ### v0.2.5  
 2022-08-09  
  
