@@ -5,9 +5,14 @@ const SCRIPTS = {
 		URL: 'http://localhost:8008/index.js',
 		REGEX: /^http:\/\/localhost:8008\/index\.js\/?(\?.*)?$/,
 	},
+	// TODO: Delete this in favor of "testing", once we're sure nothing is using it.
 	DEVELOPMENT: {
 		URL: 'https://js.buddy.insure/v2/dev/index.js',
-		REGEX: /^https:\/\/js\.buddy\.insure\/v2\/staging\/index\.js\/?(\?.*)?$/,
+		REGEX: /^https:\/\/js\.buddy\.insure\/v2\/dev\/index\.js\/?(\?.*)?$/,
+	},
+	TESTING: {
+		URL: 'https://js.buddy.insure/v2/testing/index.js',
+		REGEX: /^https:\/\/js\.buddy\.insure\/v2\/testing\/index\.js\/?(\?.*)?$/,
 	},
 	STAGING: {
 		URL: 'https://js.buddy.insure/v2/staging/index.js',
