@@ -71,19 +71,51 @@ declare type ThemeObject = {
 };
 
 /**
+ * @property url - destination url when users click the trust badge
+ * @property src - src of the img for displaying the trust badge
+ * @property [alt] - alt text for trust badge image
+ */
+declare type LogoOverride = {
+    url: string;
+    src: string;
+    alt?: string;
+};
+
+/**
+ * @param eventType - the type of user event (eg:'onCheckout')
+ * @param data - data object related to the user event.
+ * @param data.timestamp - timestamp of the event. All events have a timestamp property.
+ */
+declare type EventObject = any;
+
+/**
+ * @param type - the type of user event (eg:'onCheckout')
+ */
+declare type OnUserEventCallback = (type: EventObject) => void;
+
+/**
  * @property ion - The ion id for the offering.
  * @property partnerID - The partner ID required for instantiating the Offer
+ * @property [stage = STAGING] - toggle's the environment for the Offer Component. Defaults to STAGING. Must be set to PRODUCTION before going live.
  * @property [viewType = paginated] - establishes how the offer should display to the user. One of: 'paginated', 'single-form' or 'offer-only.'
  * @property [data] - Any customer or policy data to pre-fill the offer with. Refer to your individual ION for data structure.
- * @property [onAddToCart] - -
+ * @property [onUserEvent] - callback function for tracking user behavioral data. Triggers on user interactions such as input focus/blur, in-app navigation, etc. Refer to the docs for more details.
+ * @property [onAddToCart] - callback function triggered when users opt into an offer-only offer.
+ * @property [onRemoveFromCart] - callback function triggered when users opt out of an offer-only offer.
+ * @property [logoOverride] - object for overriding Buddy's trust badge.
+ * @property includeCheckout - toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided.
  */
 declare type BuddyOfferElementProps = {
     ion: string;
     partnerID: string;
+    stage?: string;
     viewType?: string;
     data?: DataObject;
+    onUserEvent?: OnUserEventCallback;
     onAddToCart?: AddToCartFunction;
     onRemoveFromCart?: RemoveFromCartFunction;
+    logoOverride?: LogoOverride;
+    includeCheckout: boolean;
     theme?: ThemeObject;
 };
 

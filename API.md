@@ -20,6 +20,12 @@
 <dd></dd>
 <dt><a href="#ThemeObject">ThemeObject</a> : <code>Object</code></dt>
 <dd></dd>
+<dt><a href="#LogoOverride">LogoOverride</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#EventObject">EventObject</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#OnUserEventCallback">OnUserEventCallback</a> : <code>function</code></dt>
+<dd></dd>
 <dt><a href="#BuddyOfferElementProps">BuddyOfferElementProps</a> : <code>Object</code></dt>
 <dd></dd>
 </dl>
@@ -114,6 +120,38 @@ const theme = {
 		},
 	};
 ```
+<a name="LogoOverride"></a>
+
+## LogoOverride : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| url | <code>String</code> | destination url when users click the trust badge |
+| src | <code>String</code> | src of the img for displaying the trust badge |
+| [alt] | <code>String</code> | alt text for trust badge image |
+
+<a name="EventObject"></a>
+
+## EventObject : <code>Object</code>
+**Kind**: global typedef  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| eventType | <code>string</code> | the type of user event (eg:'onCheckout') |
+| data | <code>object</code> | data object related to the user event. |
+| data.timestamp | <code>object</code> | timestamp of the event. All events have a timestamp property. |
+
+<a name="OnUserEventCallback"></a>
+
+## OnUserEventCallback : <code>function</code>
+**Kind**: global typedef  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | [<code>EventObject</code>](#EventObject) | the type of user event (eg:'onCheckout') |
+
 <a name="BuddyOfferElementProps"></a>
 
 ## BuddyOfferElementProps : <code>Object</code>
@@ -124,9 +162,13 @@ const theme = {
 | --- | --- | --- | --- |
 | ion | <code>String</code> |  | The ion id for the offering. |
 | partnerID | <code>String</code> |  | The partner ID required for instantiating the Offer |
+| [stage] | <code>String</code> | <code>&quot;STAGING&quot;</code> | toggle's the environment for the Offer Component. Defaults to STAGING. Must be set to "PRODUCTION" before going live. |
 | [viewType] | <code>String</code> | <code>&quot;paginated&quot;</code> | establishes how the offer should display to the user. One of: 'paginated', 'single-form' or 'offer-only.' |
 | [data] | [<code>DataObject</code>](#DataObject) |  | Any customer or policy data to pre-fill the offer with. Refer to your individual ION for data structure. |
-| [onAddToCart] | [<code>AddToCartFunction</code>](#AddToCartFunction) |  | - |
-| [onRemoveFromCart] | [<code>RemoveFromCartFunction</code>](#RemoveFromCartFunction) |  |  |
+| [onUserEvent] | [<code>OnUserEventCallback</code>](#OnUserEventCallback) |  | callback function for tracking user behavioral data. Triggers on user interactions such as input focus/blur, in-app navigation, etc. Refer to the docs for more details. |
+| [onAddToCart] | [<code>AddToCartFunction</code>](#AddToCartFunction) |  | callback function triggered when users opt into an offer-only offer. |
+| [onRemoveFromCart] | [<code>RemoveFromCartFunction</code>](#RemoveFromCartFunction) |  | callback function triggered when users opt out of an offer-only offer. |
+| [logoOverride] | [<code>LogoOverride</code>](#LogoOverride) |  | object for overriding Buddy's trust badge. |
+| includeCheckout | <code>boolean</code> |  | toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided. |
 | [theme] | [<code>ThemeObject</code>](#ThemeObject) |  |  |
 
