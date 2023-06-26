@@ -38,11 +38,12 @@ export default App;
 | *ion | string | | The ion ID for the product to be presented |
 | stage | enum | "STAGING" | One of: `"STAGING"`, `"PRODUCTION"`. Set to `"STAGING"` (default) for testing and development. |
 | viewType | enum | `"paginated"` | Sets how the offer element is displayed. One of: `"paginated"`, `"single-form"`, `"offer-only"`. _See [View types](#view-types) for details._|
+| data | object | | Customer or policy data to pre-load the offer with. Refer to specific ION documentation for the data structure.  |
+| theme | object | |The [theme](#styling) object for passing in styles and color palettes |
+| onUserEvent | function | | A callback for tracking user behavioral data. See [Capturing Data](#capturing-data) for details. |
 | includeCheckout | boolean | `true` | Toggles whether to render the secure checkout.  |
 | onAddToCart | function | | The callback fired when a user opts into an offer. See Buddy's Partner API docs for details on how to complete the transaction.|
 | onRemoveCart | function | | The callback fired when a user opts out of the offer. |
-| data | object | | Customer or policy data to pre-load the offer with. Refer to specific ION documentation for the data structure.  |
-| theme | object | |The [theme](#styling) object for passing in styles and color palettes |
 _*required_
 
 ---
@@ -293,3 +294,250 @@ Some components can be directly modified by accessing their class names in the t
 - view-container
 
 ---
+
+
+
+## Capturing data
+You can hook any CRM or analytics platform into the Buddy offer-element using the `onUserEvent` hook.
+
+`onUserEvent(eventType: string, data: object) ⇒ void`
+
+The `onUserEvent` hook property allows you to pass in a custom function to embed your analytics of choice. Simply pass in a callback to the `onUseEvent` option, and you will get the following 2 parameters:
+
+- **eventType:** string denoting the type of event that fired (ex: "onViewChange") 
+- **data**: object with internal data regarding the event. All data objects include a timestamp property.
+
+### Quick example
+
+```javascript
+import React from 'react';
+import BuddyOfferElement from '@buddy-technology/offer-component';
+
+function App() {
+  const handleUserEvent = (payload) => {
+    // logs an object with eventType and data to the console
+    console.log(payload)
+  };
+
+  return (
+    <div id="app">
+      <h1>My App</h1>
+      <BuddyOfferElement
+        ion="MY_ION"
+        partnerID="my-partner-id"
+        viewType="offer-only"
+        onUserEvent={handleUserEvent}
+        stage="PRODUCTION"
+      />
+    </div>
+  );
+}
+export default App;
+```
+
+### Event types and data fired:
+We capture several user-driven events and each has different available pieces of data associated with it. Look closely at the list below to determine which events you want to capture and how to use the data.
+
+##### `onViewChange`
+
+Triggers when users click to a new screen in a paginated view mode.
+
+_data returned_
+| Name      | Type   | Description                                             |
+|-----------|--------|---------------------------------------------------------|
+| `viewId`    | string | the id of the current view                              |
+| `timestamp` | number | the timestamp when the event occurred in milliseconds   |
+
+
+##### `onScrollToView`
+
+Triggers when or scroll to a section in single-page view mode.
+
+_data returned_
+
+| Name      | Type   | Description                                             |
+|-----------|--------|---------------------------------------------------------|
+| `viewId`    | string | the id of the current view                              |
+| `timestamp` | number | the timestamp when the event occurred in milliseconds   |
+
+##### `onQuote`
+
+Triggers when the app displays retrieves a quote for the policy
+
+_data returned_
+
+| Name      | Type   | Description                                                                       |
+|-----------|--------|-----------------------------------------------------------------------------------|
+| `pricing`   | number | if successful, the price of the policy                                            |
+| `error`     | string | if unsuccessful, a message explaining the type of error encountered when attempting to quote |
+| `timestamp` | number | the timestamp when the event occurred in milliseconds                           |
+
+
+##### `onCheckout`
+
+Triggers during the check out process
+
+_data returned_
+
+| Name               | Type   | Description                                                                       |
+|--------------------|--------|-----------------------------------------------------------------------------------|
+| `checkoutStatus` | enum   | one of `['start', 'success', 'error']`                                               |
+| `premium`        | number | the total premium of the purchase                                                 |
+| `error`          | string | if unsuccessful, a message explaining the type of error encountered              |
+| `timestamp`      | number | the timestamp when the event occurred in milliseconds                            |
+
+		
+##### `onFocus`
+
+Triggers when an input is focused
+
+_data returned_
+
+| Name             | Type   | Description                                             |
+|------------------|--------|---------------------------------------------------------|
+| `elementId`    | string | the id of the invalid field/input                       |
+| `timestamp`    | number | the timestamp when the event occurred in milliseconds   |
+
+
+##### `onBlur`
+
+Triggers when an input is blurred
+
+_data returned_
+
+| Name             | Type   | Description                                             |
+|------------------|--------|---------------------------------------------------------|
+| `elementId`    | string | the id of the invalid field/input                       |
+| `timestamp`    | number | the timestamp when the event occurred in milliseconds   |
+
+##### `onRadioSelection`
+
+Triggers when a radio button is selected
+
+_data returned_
+
+| Name        | Type   | Description                                             |
+|-------------|--------|---------------------------------------------------------|
+| `elementId` | string | the id of the invalid field/input                      |
+| `value`     | any    | the value of the selected radio                         |
+| `timestamp` | number | the timestamp when the event occurred in milliseconds   |
+
+##### `onSlide`
+
+Triggers when a slider input is changed
+
+_data returned_
+
+| Name        | Type   | Description                                             |
+|-------------|--------|---------------------------------------------------------|
+| `elementId` | string | the id of the invalid field/input                      |
+| `value`     | any    | the value of the selected radio                         |
+| `timestamp` | number | the timestamp when the event occurred in milliseconds   |
+
+##### `onCheckboxSelection`
+
+Triggers when a checkbox is selected
+
+_data returned_
+
+| Name         | Type    | Description                                             |
+|--------------|---------|---------------------------------------------------------|
+| `elementId` | string  | the id of the invalid field/input                       |
+| `checked`   | boolean | whether the box is checked/unchecked                    |
+| `value`     | string  | the label of the selected checkbox                      |
+| `timestamp` | number  | the timestamp when the event occurred in milliseconds   |
+
+##### `onBlur`
+
+Triggers when an input is blurred
+
+_data returned_
+
+| Name             | Type   | Description                                             |
+|------------------|--------|---------------------------------------------------------|
+| `elementId`    | string | the id of the invalid field/input                       |
+| `timestamp`    | number | the timestamp when the event occurred in milliseconds   |
+
+##### `onValidationError`
+
+Triggers when an input is triggered as invalid
+
+_data returned_
+
+| Name                 | Type   | Description                                             |
+|----------------------|--------|---------------------------------------------------------|
+| `elementId`        | string | the id of the invalid field/input                       |
+| `validationError`  | string | the type of validation error encountered                |
+| `timestamp`        | number | the timestamp when the event occurred in milliseconds   |
+
+##### `onExternalLink`
+
+Triggers when an input is triggered as invalid
+
+_data returned_
+
+| Name                 | Type   | Description                                             |
+|----------------------|--------|---------------------------------------------------------|
+| `externalLinkUrl`  | string | the url of the link                                     |
+| `timestamp`        | number | the timestamp when the event occurred in milliseconds   |
+
+### Google Analytics example
+
+```javascript
+import React from 'react';
+import BuddyOfferElement from '@buddy-technology/offer-component';
+
+function App() {
+  /* This is an example of how you could use these events
+  your usage may vary depending on your analytics systems */
+
+  const handleUserEvent = (e) => {
+    // this block shows a condition looking for checkout and success, 
+    // this is a completed purchase using the GA 'purchase' event for conversion
+    if (e.eventType == "onCheckout" && e.data.checkoutStatus == "success") {
+      gtag("event", "purchase", {
+        transaction_id: e.data.orderID,
+        value: e.data.premium,
+        items: [{
+          item_id: "SKU_12345",
+          item_name: '${ion}',
+          currency: "USD",
+          price: e.data.premium,
+        }]
+      });
+    }
+
+    // This block tracks which views are displayed 
+    // this is configured to use the built-in GA event 'screen_view'
+    if (e.eventType == "onViewChange") {
+      gtag('event', 'screen_view', {
+        'app_name': 'in-offer-element',
+        'screen_name': e.data.viewID
+      });
+    }
+    // This block tracks when quotes are made
+    // This is configured to use a custom event and captures a custom dimension
+    if (e.eventType == "onQuote") {
+      gtag('event', 'quote', {
+        'app_name': 'in-offer-element',
+        'price': e.data.pricing,
+      });
+    }
+  }
+  };
+
+  return (
+    <div id="app">
+      <h1>My App</h1>
+      <BuddyOfferElement
+        ion="MY_ION"
+        partnerID="my-partner-id"
+        viewType="offer-only"
+        onUserEvent={handleUserEvent}
+        stage="PRODUCTION"
+      />
+    </div>
+  );
+}
+export default App;
+```
