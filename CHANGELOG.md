@@ -1,5 +1,13 @@
 # CHANGELOG 
 
+### v0.3.2  
+2023-06-27  
+ 
+- fix deploy action :crossed_fingers:   
+- fix includeCheckout should be optional    
+---  
+  
+
 ### v0.3.1  
 2023-06-27  
  
