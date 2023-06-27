@@ -98,25 +98,26 @@ declare type OnUserEventCallback = (type: EventObject) => void;
  * @property partnerID - The partner ID required for instantiating the Offer
  * @property [stage = STAGING] - toggle's the environment for the Offer Component. Defaults to STAGING. Must be set to PRODUCTION before going live.
  * @property [viewType = paginated] - establishes how the offer should display to the user. One of: 'paginated', 'single-form' or 'offer-only.'
+ * @property [theme] - theming object for customizing offer component's styles
  * @property [data] - Any customer or policy data to pre-fill the offer with. Refer to your individual ION for data structure.
  * @property [onUserEvent] - callback function for tracking user behavioral data. Triggers on user interactions such as input focus/blur, in-app navigation, etc. Refer to the docs for more details.
  * @property [onAddToCart] - callback function triggered when users opt into an offer-only offer.
  * @property [onRemoveFromCart] - callback function triggered when users opt out of an offer-only offer.
+ * @property [includeCheckout] - toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided.
  * @property [logoOverride] - object for overriding Buddy's trust badge.
- * @property includeCheckout - toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided.
  */
 declare type BuddyOfferElementProps = {
     ion: string;
     partnerID: string;
     stage?: string;
     viewType?: string;
+    theme?: ThemeObject;
     data?: DataObject;
     onUserEvent?: OnUserEventCallback;
     onAddToCart?: AddToCartFunction;
     onRemoveFromCart?: RemoveFromCartFunction;
+    includeCheckout?: boolean;
     logoOverride?: LogoOverride;
-    includeCheckout: boolean;
-    theme?: ThemeObject;
 };
 
 declare function BuddyOfferElement(options: BuddyOfferElementProps): FunctionComponent<BuddyOfferElementProps>;

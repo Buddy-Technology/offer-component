@@ -93,7 +93,7 @@ import { loadScript, updateOffer } from './util';
  * @property {OnUserEventCallback} [onUserEvent] - callback function for tracking user behavioral data. Triggers on user interactions such as input focus/blur, in-app navigation, etc. Refer to the docs for more details.
  * @property {AddToCartFunction} [onAddToCart] - callback function triggered when users opt into an offer-only offer.
  * @property {RemoveFromCartFunction} [onRemoveFromCart] - callback function triggered when users opt out of an offer-only offer.
- * @property {boolean} includeCheckout - toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided.
+ * @property {boolean} [includeCheckout] - toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided.
  * @property {LogoOverride} [logoOverride] - object for overriding Buddy's trust badge.
  */
 
