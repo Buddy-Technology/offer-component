@@ -1,5 +1,13 @@
 # CHANGELOG 
 
+### v0.3.1  
+2023-06-27  
+ 
+- add missing props to types file   
+- update docs    
+---  
+  
+
 ### v0.2.6  
 2022-11-09  
  
