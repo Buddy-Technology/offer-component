@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           always-auth: true
-          node-version: '14.x'
+          node-version: '16.19'
           registry-url: https://npm.pkg.github.com/
           scope: '@buddy-technology'
 
@@ -48,15 +48,15 @@ jobs:
       #   id: test
       #   run: yarn test
 
-      - name: Let Slack Know We Failed Tests
-        if: steps.deploy.test.failure
-        id: hey-slack-fail-tests
-        uses: CamiloGarciaLaRotta/watermelon-http-client@v1
-        with:
-          url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
-          method: post
-          headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
-          data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] /\n We failed tests :sob:." }'
+      # - name: Let Slack Know We Failed Tests
+      #   if: steps.deploy.test.failure
+      #   id: hey-slack-fail-tests
+      #   uses: CamiloGarciaLaRotta/watermelon-http-client@v1
+      #   with:
+      #     url: 'https://staging.servicesapi.buddyinsurance.com/slack/message'
+      #     method: post
+      #     headers: '{"Connection":"keep-alive", "Accept":"*/*", "Content-Type":"application/json"}'
+      #     data: '{ "channel": "devops", "username": "GitHub", "icon_emoji": ":gh:", "text": ":alert: [Offer Component Release Action] /\n We failed tests :sob:." }'
 
       - name: publish
         run: npm publish --access-public
