@@ -1,5 +1,12 @@
 # CHANGELOG 
 
+### v0.3.3  
+2023-07-26  
+ 
+- added overrideScrollToTop to options    
+---  
+  
+
 ### v0.3.2  
 2023-06-27  
  
