@@ -20,6 +20,11 @@ declare type AddToCartFunction = () => DataObject;
 declare type RemoveFromCartFunction = () => DataObject;
 
 /**
+ * A function to override the default scroll to top of offer element behavior when navigating between screens
+ */
+declare type ScrollToTopFunction = () => void;
+
+/**
  * @property [webFonts] - array of url strings linking to web fonts.
  * @property [styles] - Object Styles object for overriding any css.
  * @property [colors] - Object for overriding individual color options.
@@ -103,6 +108,7 @@ declare type OnUserEventCallback = (type: EventObject) => void;
  * @property [onUserEvent] - callback function for tracking user behavioral data. Triggers on user interactions such as input focus/blur, in-app navigation, etc. Refer to the docs for more details.
  * @property [onAddToCart] - callback function triggered when users opt into an offer-only offer.
  * @property [onRemoveFromCart] - callback function triggered when users opt out of an offer-only offer.
+ * @property [overrideScrollToTop] - When present, this overrides the default scroll to top of offer element behavior when navigating between screens.
  * @property [includeCheckout] - toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided.
  * @property [logoOverride] - object for overriding Buddy's trust badge.
  */
@@ -116,6 +122,7 @@ declare type BuddyOfferElementProps = {
     onUserEvent?: OnUserEventCallback;
     onAddToCart?: AddToCartFunction;
     onRemoveFromCart?: RemoveFromCartFunction;
+    overrideScrollToTop?: ScrollToTopFunction;
     includeCheckout?: boolean;
     logoOverride?: LogoOverride;
 };

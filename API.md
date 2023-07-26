@@ -16,6 +16,9 @@
 <dt><a href="#RemoveFromCartFunction">RemoveFromCartFunction</a> ⇒ <code><a href="#DataObject">DataObject</a></code></dt>
 <dd><p>A callback to be called with a payload object when users opt out of the offer.</p>
 </dd>
+<dt><a href="#ScrollToTopFunction">ScrollToTopFunction</a> : <code>function</code></dt>
+<dd><p>A function to override the default scroll to top of offer element behavior when navigating between screens</p>
+</dd>
 <dt><a href="#OverridesObject">OverridesObject</a> : <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#ThemeObject">ThemeObject</a> : <code>Object</code></dt>
@@ -64,6 +67,12 @@ A callback to be called with a payload object when users opt out of the offer.
 
 **Kind**: global typedef  
 **Returns**: [<code>DataObject</code>](#DataObject) - the policy payload  
+<a name="ScrollToTopFunction"></a>
+
+## ScrollToTopFunction : <code>function</code>
+A function to override the default scroll to top of offer element behavior when navigating between screens
+
+**Kind**: global typedef  
 <a name="OverridesObject"></a>
 
 ## OverridesObject : <code>Object</code>
@@ -169,6 +178,7 @@ const theme = {
 | [onUserEvent] | [<code>OnUserEventCallback</code>](#OnUserEventCallback) |  | callback function for tracking user behavioral data. Triggers on user interactions such as input focus/blur, in-app navigation, etc. Refer to the docs for more details. |
 | [onAddToCart] | [<code>AddToCartFunction</code>](#AddToCartFunction) |  | callback function triggered when users opt into an offer-only offer. |
 | [onRemoveFromCart] | [<code>RemoveFromCartFunction</code>](#RemoveFromCartFunction) |  | callback function triggered when users opt out of an offer-only offer. |
+| [overrideScrollToTop] | [<code>ScrollToTopFunction</code>](#ScrollToTopFunction) |  | When present, this overrides the default scroll to top of offer element behavior when navigating between screens. |
 | [includeCheckout] | <code>boolean</code> |  | toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided. |
 | [logoOverride] | [<code>LogoOverride</code>](#LogoOverride) |  | object for overriding Buddy's trust badge. |
 

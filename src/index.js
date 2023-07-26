@@ -20,6 +20,11 @@ import { loadScript, updateOffer } from './util';
  */
 
 /**
+ * @typedef {Function} ScrollToTopFunction
+ * @description A function to override the default scroll to top of offer element behavior when navigating between screens
+ */
+
+/**
  * @typedef {Object} OverridesObject
  * @property {Array<String>} [webFonts] - array of url strings linking to web fonts.
  * @property {Object} [styles] - Object Styles object for overriding any css.
@@ -93,6 +98,7 @@ import { loadScript, updateOffer } from './util';
  * @property {OnUserEventCallback} [onUserEvent] - callback function for tracking user behavioral data. Triggers on user interactions such as input focus/blur, in-app navigation, etc. Refer to the docs for more details.
  * @property {AddToCartFunction} [onAddToCart] - callback function triggered when users opt into an offer-only offer.
  * @property {RemoveFromCartFunction} [onRemoveFromCart] - callback function triggered when users opt out of an offer-only offer.
+ * @property {ScrollToTopFunction} [overrideScrollToTop] - When present, this overrides the default scroll to top of offer element behavior when navigating between screens.
  * @property {boolean} [includeCheckout] - toggles whether or not to display the card capture checkout view. Defaults to true. When false, an AddToCart callback must be provided.
  * @property {LogoOverride} [logoOverride] - object for overriding Buddy's trust badge.
  */
