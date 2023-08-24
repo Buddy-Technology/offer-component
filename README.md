@@ -53,7 +53,8 @@ Buddy's Offer Element comes in three different view types:
 
 - __paginated__ (default) - A paginated form where users click through to the next section.
 - __single form__ - A single form where all fields are displayed in the same, scrollable view.
-- __offer only__ - Hide all the form fields and only display the insurance offer with the quote. Using this mode requires collecting all necessary data and a payment integration (See Buddy's [Partner API docs](https://buddyinsurance.stoplight.io/docs/partner-api-documentation/ZG9jOjE1NDc1MzQx)).
+- __offer only__ -  View for displaying just the insurance offer with a quote and checkbox that fires `onAddToCart` when checked and `onRemoveFromCart` when unchecked (see [For full stack apps](#for-full-stack-apps) for more info). 
+**NOTE**: Offer-Only implementations are meant to be rendered in a controlled environment with necessary data passed into it, and will require a payment integration for checkout (see Buddy's [Partner API docs](https://buddyinsurance.stoplight.io/docs/partner-api-documentation/ZG9jOjE1NDc1MzQx)). If any fields are missing or invalid, a step-through form will render with the individual views that include the needed fields. Views with satisfied fields will be skipped. Once users rectify any needed info, they will land on the offer only screen. 
 
 ---
 ## Checkout
@@ -71,16 +72,52 @@ To use this mode, set `includeCheckout` to `false`, or set viewType to `offer-on
 When users opt in, the `onAddToCart` callback is fired with the completed application object. If a user opts out, `onRemoveFromCart` will be called.
 
 ```javascript
+// simple paginated example to collect data
 import React from 'react';
 import BuddyOfferElement from '@buddy-technology/offer-component';
+import { handleAddToCart, handleRemoveFromCart } from './myApi';
 
 function App() {
   const handleAddToCart = (payload) => {
-    console.log(payload)
+    handleAddToCart(payload)
   };
 
   const handleRemoveFromCart = (payload) => {
-    console.log(payload)
+    handleRemoveFromCart(payload)
+  };
+
+  return (
+    <div id="app">
+      <h1>My App</h1>
+      <BuddyOfferElement
+        ion="MY_ION"
+        partnerID="my-partner-id"
+        viewType="paginated"
+        includeCheckout={false}
+        onAddToCart={handleAddToCart}
+        onRemoveFromCart={handleRemoveFromCart}
+        stage="PRODUCTION"
+      />
+    </div>
+  );
+}
+export default App;
+```
+
+```javascript
+// example using offer-only and passing in customer/policy data
+import React from 'react';
+import BuddyOfferElement from '@buddy-technology/offer-component';
+import { handleAddToCart, handleRemoveFromCart } from './myApi';
+
+// passing down data as prop in this example
+function App({ userAndPolicyData }) {
+  const handleAddToCart = (payload) => {
+    handleAddToCart(payload)
+  };
+
+  const handleRemoveFromCart = (payload) => {
+    handleRemoveFromCart(payload)
   };
 
   return (
@@ -90,6 +127,7 @@ function App() {
         ion="MY_ION"
         partnerID="my-partner-id"
         viewType="offer-only"
+        data={userAndPolicyData} // data is passed in, if any fields are invalid, they will be displayed to user to rectify before purchasing.
         onAddToCart={handleAddToCart}
         onRemoveFromCart={handleRemoveFromCart}
         stage="PRODUCTION"
