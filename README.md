@@ -240,17 +240,6 @@ function App() {
 }
 export default App;
 ```
-### Base Themes
-
-We currently offer two baseThemes to start with (with more coming soon!) If you plan on doing very extensive overrides, set the baseTheme to `'none'`.
-
-#### Available themes:
-
-`'base`':
-![base_theme.png](https://stoplight.io/api/v1/projects/cHJqOjEwMDA3NA/images/P1s10VpVT64)
-
-`'buddy'`:
-![buddy_theme.png](https://stoplight.io/api/v1/projects/cHJqOjEwMDA3NA/images/ker3veyTXrs)
 
 ### Color Palettes
 We currently offer two color palettes to start with (with more coming soon!).
